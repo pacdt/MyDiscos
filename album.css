@@ -5,28 +5,28 @@
         align-items: center;
         gap: 10px;
     }
-}
-#album-info h2{
-    font-size: 1.8rem;
-    text-align: center;
-}
-#album-info h3{
-    font-size: 1.3rem;
-    text-align: center;
-    margin-top: -10px;
-    margin-bottom: 15px;
-}
-#album-info ul li{
-    margin-bottom: 5px;
-    font-size: 1.2rem;
-}
-#lista-musicas h3{
-    font-size: 1.6rem;
-    text-align: center;
-}
-#album-info #cover{
-    width: 300px;
-}
-#dz-link img{
-    width: 36px;
+    #album-info h2{
+        font-size: 1.8rem;
+        text-align: center;
+    }
+    #album-info h3{
+        font-size: 1.3rem;
+        text-align: center;
+        margin-top: -10px;
+        margin-bottom: 15px;
+    }
+    #album-info ul li{
+        margin-bottom: 5px;
+        font-size: 1.2rem;
+    }
+    #lista-musicas h3{
+        font-size: 1.6rem;
+        text-align: center;
+    }
+    #album-info #cover{
+        width: 300px;
+    }
+    #dz-link img{
+        width: 36px;
+    }
 }
