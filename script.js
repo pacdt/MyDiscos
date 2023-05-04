@@ -1,4 +1,4 @@
-var ALB_ID = [12047958, 300356, 119899, 120869, 71057352, 8145768,90402];
+var ALB_ID = [12047958, 300356, 119899, 120869, 71057352, 8145768,90402,12047948];
 let api = "https://deezerdevs-deezer.p.rapidapi.com/album/";
 let container = document.getElementById('discos'); // elemento pai onde os cards serão adicionados
 
