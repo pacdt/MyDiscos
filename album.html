@@ -2,6 +2,11 @@
 <html lang="pt-br">
 	<head>
 		<meta charset="UTF-8" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap"
+			rel="stylesheet" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="./style.css" />
 		<title id="album-page">Album</title>
@@ -23,7 +28,7 @@
 							<li id="duracao">Duração:</li>
 							<li id="data">Data:</li>
 							<li id="gravadora">Gravadora:</li>
-							<li id="tipo">Tipo:</li>
+							<li id="deezer">Ouvir no Deezer: <a id="dz-link" href="" target="_blank"><img src="./assets/dz.png" width="46px" alt="Deezer Logo"></a></li>
 						</ul>
 					</div>
 				</div>
@@ -68,7 +73,7 @@
 				const musicas = document.querySelector("#musicas");
 				const duracao = document.querySelector("#duracao");
 				const gravadora = document.querySelector("#gravadora");
-				const tipo = document.querySelector("#tipo");
+				const dz = document.querySelector("#dz-link");
 				const page = document.querySelector("#album-page");
 				const listaMusicas = document.querySelector("#lista-musicas");
 
@@ -82,40 +87,71 @@
 				duracao.textContent =
 					"Duração: " + Math.floor(album.duration / 60) + " min";
 				gravadora.textContent = "Gravadora: " + album.label;
-				tipo.textContent = "Tipo: " + album.type;
+				dz.href = album.link;
 
 				let container = document.getElementById("list");
 				const track = album.tracks.data;
 
-				for (let i = 0; i < track.length; i++) {
-					const li = createLi(track[i]);
-					container.appendChild(li);
-				}
 
-				function createLi(nb) {
-					const li = document.createElement("li");
+				// Crie um objeto 'tracksData' para armazenar as informações de cada faixa
+				const tracksData = track.map((track) => ({
+					url: track.preview,
+					title: track.title,
+					isPlaying: false,
+					audio: new Audio(track.preview),
+				}));
 
-					const playbtn = document.getElementById("play-btn");
-					const audio = new Audio(track[nb].preview);
+				// Crie a lista de faixas com os botões de reprodução correspondentes
+				const listItems = tracksData
+					.map(
+						(trackData, index) => `
+						<li class="lista">
+							<img
+							class="play-btn"
+							data-track-index="${index}"
+							width="20px"
+							src="./assets/play.png"
+							alt=""
+							/>
+							<h4>${trackData.title}</h4>
+						</li>
+						`
+					)
+					.join("");
+				container.innerHTML = listItems;
+					
+				// Seleciona todos os botões de reprodução
+				const playButtons = document.querySelectorAll(".play-btn");
 
-					playbtn.addEventListener("click", function () {
+				// Adiciona um ouvinte de eventos de clique a cada botão de reprodução
+				playButtons.forEach((playButton) => {
+					playButton.addEventListener("click", () => {
+						const trackIndex =
+							playButton.getAttribute("data-track-index");
+						const trackData = tracksData[trackIndex];
+						const audio = trackData.audio;
+
 						if (audio.paused) {
+							// Pausa todos os áudios antes de tocar a nova faixa
+							tracksData.forEach((trackData) => {
+								if (trackData.isPlaying) {
+									trackData.audio.pause();
+									trackData.isPlaying = false;
+								}
+							});
+
+							// Toca a faixa selecionada
 							audio.play();
+							trackData.isPlaying = true;
+							playButton.src = "./assets/pause.png";
 						} else {
+							// Pausa a faixa selecionada
 							audio.pause();
+							trackData.isPlaying = false;
+							playButton.src = "./assets/play.png";
 						}
 					});
-					li.innerHTML = `
-                        <img
-                            id="play-btn"
-                            data-audio-url=""
-                            width="20px"
-                            src="./assets/play.png"
-                            alt="" />
-                        <h4>${track.title}</h4>
-                    `;
-				}
-				return li;
+				});
 			}
 		</script>
 	</body>

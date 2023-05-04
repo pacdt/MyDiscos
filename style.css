@@ -23,6 +23,7 @@ main{
     height: 100%;
 
     padding-top: 15px;
+    margin-bottom: 25px;
 
     display: flex;
     justify-content: center;
@@ -93,17 +94,26 @@ section{
 }
 #lista-musicas{
     margin-top: 25px;
+    margin-bottom: 25px;
 }
 #lista-musicas h3{
     font-size: 2rem;
 }
 #lista-musicas ul li{
     display: flex;
-    flex-direction: row;
     align-items: center;
     gap: 15px;
     font-size: 1.4rem;
     background-color: #ccc;
     padding: 5px;
     border-radius: 10px;
+    margin-bottom: 10px;
+}
+#lista-musicas ul li h4{
+    margin: 0;
+}
+#deezer{
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
