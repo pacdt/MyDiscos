@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="./style.css" />
+		<title id="album-page">Album</title>
+	</head>
+	<body>
+		<header>
+			<img src="./assets/disco.png" alt="disco de vinil em vetor" />
+			<h1>Minha Discografia</h1>
+		</header>
+		<main>
+			<section>
+				<div id="album-info">
+					<img id="cover" width="400px" src="" alt="" />
+					<div id="info">
+						<h2 id="title">Álbum</h2>
+						<h3 id="artist">Artista</h3>
+						<ul>
+							<li id="musicas">Músicas:</li>
+							<li id="duracao">Duração:</li>
+							<li id="data">Data:</li>
+							<li id="gravadora">Gravadora:</li>
+							<li id="tipo">Tipo:</li>
+						</ul>
+					</div>
+				</div>
+				<div id="lista-musicas">
+					<h3>Músicas</h3>
+					<ul id="list"></ul>
+				</div>
+			</section>
+		</main>
+		<script>
+			const params = new URLSearchParams(window.location.search);
+			const albumId = params.get("id");
+
+			const api = "https://deezerdevs-deezer.p.rapidapi.com/album/";
+
+			const xhr = new XMLHttpRequest();
+			xhr.withCredentials = true;
+			xhr.addEventListener("readystatechange", function () {
+				if (this.readyState === this.DONE) {
+					const album = JSON.parse(this.responseText);
+					showAlbum(album);
+				}
+			});
+
+			xhr.open("GET", api + albumId);
+			xhr.setRequestHeader(
+				"X-RapidAPI-Key",
+				"8776cae989msh3c8d35a1d3def30p139d33jsn89d481789073"
+			);
+			xhr.setRequestHeader(
+				"X-RapidAPI-Host",
+				"deezerdevs-deezer.p.rapidapi.com"
+			);
+			xhr.send();
+
+			function showAlbum(album) {
+				const title = document.querySelector("#title");
+				const artist = document.querySelector("#artist");
+				const cover = document.querySelector("#cover");
+				const releaseDate = document.querySelector("#data");
+				const musicas = document.querySelector("#musicas");
+				const duracao = document.querySelector("#duracao");
+				const gravadora = document.querySelector("#gravadora");
+				const tipo = document.querySelector("#tipo");
+				const page = document.querySelector("#album-page");
+				const listaMusicas = document.querySelector("#lista-musicas");
+
+				page.textContent = album.title;
+				title.textContent = album.title;
+				artist.textContent = album.artist.name;
+				cover.src = album.cover_xl;
+				releaseDate.textContent =
+					"Lançamento: " + album.release_date.slice(0, 4);
+				musicas.textContent = "Músicas: " + album.nb_tracks;
+				duracao.textContent =
+					"Duração: " + Math.floor(album.duration / 60) + " min";
+				gravadora.textContent = "Gravadora: " + album.label;
+				tipo.textContent = "Tipo: " + album.type;
+
+
+				let container = document.getElementById("list");
+                const track = album.tracks.data
+
+                for (let i = 0; i < track.length; i++) {
+					const li = createLi(track[i]);
+                    container.appendChild(li)
+				}
+
+				function createLi(nb) {
+                    const li = document.createElement('li');
+
+					const playbtn = document.getElementById("play-btn");
+					const audio = new Audio(track[nb].preview);
+
+					playbtn.addEventListener("click", function () {
+						if (audio.paused) {
+							audio.play();
+						} else {
+							audio.pause();
+						}
+					});
+                    li.innerHTML =
+                    `
+                        <img
+                            id="play-btn"
+                            data-audio-url=""
+                            width="20px"
+                            src="./assets/play.png"
+                            alt="" />
+                        <h4>${track.title}</h4>
+                    `;
+				}
+                return li
+			}
+		</script>
+	</body>
+</html>
