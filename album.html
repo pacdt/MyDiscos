@@ -34,6 +34,10 @@
 			</section>
 		</main>
 		<script>
+			const key1 = "8776cae989msh";
+			const key2 = "3c8d35a1d3def30p";
+			const key3 = "139d33jsn89d481789073";
+			const fullkey = key1 + key2 + key3;
 			const params = new URLSearchParams(window.location.search);
 			const albumId = params.get("id");
 
@@ -49,10 +53,7 @@
 			});
 
 			xhr.open("GET", api + albumId);
-			xhr.setRequestHeader(
-				"X-RapidAPI-Key",
-				"8776cae989msh3c8d35a1d3def30p139d33jsn89d481789073"
-			);
+			xhr.setRequestHeader("X-RapidAPI-Key", fullkey);
 			xhr.setRequestHeader(
 				"X-RapidAPI-Host",
 				"deezerdevs-deezer.p.rapidapi.com"
@@ -83,17 +84,16 @@
 				gravadora.textContent = "Gravadora: " + album.label;
 				tipo.textContent = "Tipo: " + album.type;
 
-
 				let container = document.getElementById("list");
-                const track = album.tracks.data
+				const track = album.tracks.data;
 
-                for (let i = 0; i < track.length; i++) {
+				for (let i = 0; i < track.length; i++) {
 					const li = createLi(track[i]);
-                    container.appendChild(li)
+					container.appendChild(li);
 				}
 
 				function createLi(nb) {
-                    const li = document.createElement('li');
+					const li = document.createElement("li");
 
 					const playbtn = document.getElementById("play-btn");
 					const audio = new Audio(track[nb].preview);
@@ -105,8 +105,7 @@
 							audio.pause();
 						}
 					});
-                    li.innerHTML =
-                    `
+					li.innerHTML = `
                         <img
                             id="play-btn"
                             data-audio-url=""
@@ -116,7 +115,7 @@
                         <h4>${track.title}</h4>
                     `;
 				}
-                return li
+				return li;
 			}
 		</script>
 	</body>

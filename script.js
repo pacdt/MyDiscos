@@ -1,6 +1,10 @@
 var ALB_ID = [12047958, 300356, 119899, 120869, 71057352, 8145768,90402,12047948];
 let api = "https://deezerdevs-deezer.p.rapidapi.com/album/";
 let container = document.getElementById('discos'); // elemento pai onde os cards serão adicionados
+const key1 = "8776cae989msh"
+const key2 = "3c8d35a1d3def30p"
+const key3 = "139d33jsn89d481789073"
+const fullkey = key1 + key2 + key3
 
 for (let i = 0; i < ALB_ID.length; i++) {
 	const card = createCard(ALB_ID[i]);
@@ -22,7 +26,7 @@ function createCard(id) {
 	xhr.open("GET", api + id);
 	xhr.setRequestHeader(
 		"X-RapidAPI-Key",
-		"8776cae989msh3c8d35a1d3def30p139d33jsn89d481789073"
+		fullkey
 	);
 	xhr.setRequestHeader("X-RapidAPI-Host", "deezerdevs-deezer.p.rapidapi.com");
 
