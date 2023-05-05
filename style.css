@@ -49,13 +49,16 @@ main{
     align-items: center;
     justify-content: center;
     width: 200px;
-    /* background-color: aqua; */
 }
 .card:hover{
     cursor: pointer;
 }
 .card img{
     width: 200px;
+    height: 200px;
+}
+p{
+    text-align: center;
 }
 h4{
     margin-top: 10px;
